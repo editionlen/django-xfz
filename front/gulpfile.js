@@ -8,7 +8,8 @@ var imagemin = require("gulp-imagemin");
 var bs = require("browser-sync").create();
 
 var path={
-    'css':'./src/css',
+    'html': './templates/**/',
+    'css':'./src/css/',
     'js':'./src/js/',
     'images': './src/images/',
     'css_dist':'./dist/css/',
@@ -16,26 +17,35 @@ var path={
     'images_dist': './dist/images/'
 };
 
+gulp.task("html", function () {
+   gulp.src(path.html + '*.html')
+       .pipe(bs.stream())
+});
+
 gulp.task("css", function () {
     gulp.src(path.css + '*.css')
         .pipe(cssnano())
-        .pipe(rename({"suffix":"min"}))
+        .pipe(rename({"suffix":".min"}))
         .pipe(gulp.dest(path.css_dist))
+        .pipe(bs.stream())
 });
 
 gulp.task("js", function () {
     gulp.src(path.js + '*.js')
         .pipe(uglify())
         .pipe(gulp.dest(path.js_dist))
+        .pipe(bs.stream())
 });
 
 gulp.task("images", function () {
     gulp.src(path.images + '*.*')
         .pipe(cache(imagemin()))
         .pipe(gulp.dest(path.images_dist))
+        .pipe(bs.stream())
 });
 
 gulp.task("watch",function () {
+    gulp.watch(path.html + '*.html', ['html']);
     gulp.watch(path.css + '*.css', ['css']);
     gulp.watch(path.js + '*.js', ['js']);
     gulp.watch(path.images + '*.*', ['images']);
