@@ -93,9 +93,11 @@ header {
         width:100%;
         height: $bannerHeight;
         background: #0e275e;
+        position: relative; //相对定位
         .banner-url{
           overflow: hidden;
           width: $bannerWidth*4;
+          position: absolute; //绝对定位
 
           li{
             float:left;
