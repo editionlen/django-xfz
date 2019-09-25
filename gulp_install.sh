@@ -12,4 +12,4 @@ npm install gulp-uglify --save-dev
 npm install gulp-cssnano --save-dev
 
 npm uninstall gulp-cache --save-dev
-npm install gulp-cache@1.1.1 --save-dev
+npm install gulp-cache@1.0.2 --save-dev

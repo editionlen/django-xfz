@@ -6,6 +6,7 @@ var concat = require("gulp-concat");
 var cache = require("gulp-cache");
 var imagemin = require("gulp-imagemin");
 var bs = require("browser-sync").create();
+var sass = require("gulp-sass");
 
 var path={
     'html': './templates/**/',
@@ -23,7 +24,8 @@ gulp.task("html", function () {
 });
 
 gulp.task("css", function () {
-    gulp.src(path.css + '*.css')
+    gulp.src(path.css + '*.scss')
+        .pipe(sass().on("error", sass.logError))
         .pipe(cssnano())
         .pipe(rename({"suffix":".min"}))
         .pipe(gulp.dest(path.css_dist))
@@ -46,7 +48,7 @@ gulp.task("images", function () {
 
 gulp.task("watch",function () {
     gulp.watch(path.html + '*.html', ['html']);
-    gulp.watch(path.css + '*.css', ['css']);
+    gulp.watch(path.css + '*.scss', ['css']);
     gulp.watch(path.js + '*.js', ['js']);
     gulp.watch(path.images + '*.*', ['images']);
 });
