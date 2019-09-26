@@ -1,18 +1,34 @@
 function Banner() {
     this.bannerGroup = $("#banner-group");
     this.index = 0;
+    this.leftArrow = $('.left-arrow');
+    this.rightArrow = $(".right-arrow");
     this.listenBannerHover();
 }
+
+Banner.prototype.toggleArrow = function (isShow) {
+    var self = this;
+    if(isShow)
+    {
+      self.leftArrow.show();
+      self.rightArrow.show();
+    }else{
+      self.leftArrow.hide();
+      self.rightArrow.hide();
+    }
+};
 
 Banner.prototype.listenBannerHover = function () {
     var self = this;
   this.bannerGroup.hover(function(){
       //鼠标移到banner上执行的函数
-      clearInterval(self.timer)
+      clearInterval(self.timer);
+      self.toggleArrow(true);
       },
       function(){
       //鼠标从banner移走会执行的函数
-          self.loop()
+          self.loop();
+          self.toggleArrow(false);
       });
 };
 

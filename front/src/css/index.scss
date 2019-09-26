@@ -109,6 +109,23 @@ header {
             }
           }
         }
+        .arrow{
+          font-family: Helvetica, Neue, Helvetica,Arial, sans-serif;
+          font-size: 70px;
+          color: #fff;
+          position: absolute;
+          top: 50%;
+          margin-top: -45px;
+          cursor: pointer;
+          display: none;
+        }
+
+        .left-arrow{
+          left: 20px;
+        }
+        .right-arrow{
+          right: 20px;
+        }
       }
     }
 
