@@ -1,4 +1,5 @@
 function Banner() {
+    this.bannerWidth = 798;
     this.bannerGroup = $("#banner-group");
     this.index = 0;
     this.leftArrow = $('.left-arrow');
@@ -8,6 +9,26 @@ function Banner() {
     this.bannerCount = this.liList.length;
     this.listenBannerHover();
 }
+
+Banner.prototype.initBanner = function () {
+    var self = this;
+    self.bannerUl.css({"width": self.bannerWidth*self.bannerCount})
+};
+
+Banner.prototype.initPageControl=function () {
+    var self = this;
+    var pageControl = $(".page-control");
+    for(var i=0;i<self.bannerCount;i++)
+    {
+        var circle = $("<li></li>");
+        pageControl.append(circle);
+        if(i === 0)
+        {
+            circle.addClass("active")
+        }
+    }
+    pageControl.css({"width":self.bannerCount*12+8*2+16*(self.bannerCount -1)});
+};
 
 Banner.prototype.animate = function () {
     var self = this;
@@ -83,8 +104,10 @@ Banner.prototype.loop = function(){
 
 Banner.prototype.run = function(){
     console.log("abc");
+    this.initBanner();
+    this.initPageControl();
     this.loop();
-    this.listenArrowClick()
+    this.listenArrowClick();
 };
 //万能的$方法，确保轮播图片加载完再执行轮播
 $(function(){
