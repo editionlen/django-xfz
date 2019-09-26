@@ -126,6 +126,33 @@ header {
         .right-arrow{
           right: 20px;
         }
+
+        .page-control-group{
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 20px;
+
+          .page-control{
+            margin: 0 auto;
+            overflow: hidden;
+            width: 12*4px + 8*2px + 16*3px;
+
+            li{
+              width: 12px;
+              height: 10px;
+              border: 1px solid #fff;
+              border-radius: 50%;
+              float:left;
+              margin: 0 8px;
+              box-sizing: border-box;
+              cursor: pointer;
+              &.active{
+                background: #fff;
+              }
+            }
+          }
+        }
       }
     }
 
