@@ -7,6 +7,9 @@ var cache = require("gulp-cache");
 var imagemin = require("gulp-imagemin");
 var bs = require("browser-sync").create();
 var sass = require("gulp-sass");
+// gulp-util 这个插件中有一个方法log,可以打印当前js错误的信息
+var util = require("gulp-util");
+var sourcemaps = require("gulp-sourcemaps");
 
 var path={
     'html': './templates/**/',
@@ -34,8 +37,10 @@ gulp.task("css", function () {
 
 gulp.task("js", function () {
     gulp.src(path.js + '*.js')
-        .pipe(uglify())
+        .pipe(sourcemaps.init())
+        .pipe(uglify().on("error", util.log))
         .pipe(rename({"suffix":".min"}))
+        .pipe(sourcemaps.write())
         .pipe(gulp.dest(path.js_dist))
         .pipe(bs.stream())
 });

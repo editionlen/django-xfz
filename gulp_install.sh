@@ -13,3 +13,6 @@ npm install gulp-cssnano --save-dev
 
 npm uninstall gulp-cache --save-dev
 npm install gulp-cache@1.0.2 --save-dev
+
+npm install gulp-util --save-dev
+npm install gulp-sourcemaps --save-dev

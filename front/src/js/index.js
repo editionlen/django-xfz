@@ -3,8 +3,42 @@ function Banner() {
     this.index = 0;
     this.leftArrow = $('.left-arrow');
     this.rightArrow = $(".right-arrow");
+    this.bannerUl = $("#banner-ul");
+    this.liList = this.bannerUl.children("li");
+    this.bannerCount = this.liList.length;
     this.listenBannerHover();
 }
+
+Banner.prototype.animate = function () {
+    var self = this;
+    self.bannerUl.animate({"left":-798*self.index},500)
+};
+
+Banner.prototype.listenArrowClick = function () {
+    var self = this;
+    self.leftArrow.click(function(){
+        if(self.index === 0)
+        {
+            self.index = self.bannerCount - 1;
+        }
+        else
+        {
+            self.index--;
+        }
+        self.animate();
+    });
+    self.rightArrow.click(function(){
+        if(self.index === self.bannerCount - 1)
+        {
+            self.index = 0;
+        }
+        else
+        {
+            self.index++;
+        }
+        self.animate();
+    })
+};
 
 Banner.prototype.toggleArrow = function (isShow) {
     var self = this;
@@ -43,13 +77,14 @@ Banner.prototype.loop = function(){
         else {
             self.index++;
         }
-        bannerUl.animate({"left":-798*self.index}, 500);
+        self.animate();
     }, 2000);
 };
 
 Banner.prototype.run = function(){
     console.log("abc");
-    this.loop()
+    this.loop();
+    this.listenArrowClick()
 };
 //万能的$方法，确保轮播图片加载完再执行轮播
 $(function(){
