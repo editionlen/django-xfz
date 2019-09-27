@@ -1,7 +1,7 @@
 function Banner() {
     this.bannerWidth = 798;
     this.bannerGroup = $("#banner-group");
-    this.index = 0;
+    this.index = 1;
     this.leftArrow = $('.left-arrow');
     this.rightArrow = $(".right-arrow");
     this.bannerUl = $("#banner-ul");
@@ -12,7 +12,13 @@ function Banner() {
 
 Banner.prototype.initBanner = function () {
     var self = this;
-    self.bannerUl.css({"width": self.bannerWidth*self.bannerCount})
+
+    var firstBanner = self.liList.eq(0).clone();
+    var lastBanner = self.liList.eq(self.bannerCount - 1).clone();
+    self.bannerUl.append(firstBanner);
+    self.bannerUl.prepend(lastBanner);
+    self.bannerUl.css({"width": self.bannerWidth*(self.bannerCount+2),
+    'left':-self.bannerWidth});
 };
 
 Banner.prototype.initPageControl=function () {
@@ -32,7 +38,20 @@ Banner.prototype.initPageControl=function () {
 Banner.prototype.animate = function () {
     var self = this;
     self.bannerUl.animate({"left":-798*self.index},500);
-    self.pageControl.children('li').eq(self.index).addClass("active").siblings().removeClass("active")
+    var index = self.index;
+    if(index === 0)
+    {
+        index = self.bannerCount - 1;
+    }
+    else if(index === self.bannerCount+1)
+    {
+        index = 0;
+    }
+    else
+    {
+        index = self.index - 1
+    }
+    self.pageControl.children('li').eq(index).addClass("active").siblings().removeClass("active")
 };
 
 Banner.prototype.listenArrowClick = function () {
@@ -77,9 +96,10 @@ Banner.prototype.loop = function(){
     var self = this;
     var bannerUl = $("#banner-ul");//#+id名称表示选择了id为xxx的控件
     this.timer = setInterval(function(){
-        if(self.index >= self.bannerCount - 1)
+        if(self.index >= self.bannerCount + 1)
         {
-            self.index = 0;
+            self.bannerUl.css({"left":-self.bannerWidth});
+            self.index = 2;
         }
         else {
             self.index++;
