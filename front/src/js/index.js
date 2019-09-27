@@ -7,7 +7,7 @@ function Banner() {
     this.bannerUl = $("#banner-ul");
     this.liList = this.bannerUl.children("li");
     this.bannerCount = this.liList.length;
-    this.listenBannerHover();
+    this.pageControl = $(".page-control")
 }
 
 Banner.prototype.initBanner = function () {
@@ -17,22 +17,22 @@ Banner.prototype.initBanner = function () {
 
 Banner.prototype.initPageControl=function () {
     var self = this;
-    var pageControl = $(".page-control");
     for(var i=0;i<self.bannerCount;i++)
     {
         var circle = $("<li></li>");
-        pageControl.append(circle);
+        self.pageControl.append(circle);
         if(i === 0)
         {
             circle.addClass("active")
         }
     }
-    pageControl.css({"width":self.bannerCount*12+8*2+16*(self.bannerCount -1)});
+    self.pageControl.css({"width":self.bannerCount*12+8*2+16*(self.bannerCount -1)});
 };
 
 Banner.prototype.animate = function () {
     var self = this;
-    self.bannerUl.animate({"left":-798*self.index},500)
+    self.bannerUl.animate({"left":-798*self.index},500);
+    self.pageControl.children('li').eq(self.index).addClass("active").siblings().removeClass("active")
 };
 
 Banner.prototype.listenArrowClick = function () {
@@ -73,6 +73,21 @@ Banner.prototype.toggleArrow = function (isShow) {
     }
 };
 
+Banner.prototype.loop = function(){
+    var self = this;
+    var bannerUl = $("#banner-ul");//#+id名称表示选择了id为xxx的控件
+    this.timer = setInterval(function(){
+        if(self.index >= self.bannerCount - 1)
+        {
+            self.index = 0;
+        }
+        else {
+            self.index++;
+        }
+        self.animate();
+    }, 2000);
+};
+
 Banner.prototype.listenBannerHover = function () {
     var self = this;
   this.bannerGroup.hover(function(){
@@ -87,19 +102,14 @@ Banner.prototype.listenBannerHover = function () {
       });
 };
 
-Banner.prototype.loop = function(){
+Banner.prototype.listenPageControl = function () {
     var self = this;
-    var bannerUl = $("#banner-ul");//#+id名称表示选择了id为xxx的控件
-    this.timer = setInterval(function(){
-        if(self.index >= 3)
-        {
-            self.index = 0;
-        }
-        else {
-            self.index++;
-        }
-        self.animate();
-    }, 2000);
+    self.pageControl.children("li").each(function (index, obj) {
+        $(obj).click(function () {
+            self.index = index;
+            self.animate();
+        })
+    })
 };
 
 Banner.prototype.run = function(){
@@ -107,7 +117,9 @@ Banner.prototype.run = function(){
     this.initBanner();
     this.initPageControl();
     this.loop();
+    this.listenBannerHover();
     this.listenArrowClick();
+    this.listenPageControl();
 };
 //万能的$方法，确保轮播图片加载完再执行轮播
 $(function(){

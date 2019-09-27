@@ -16,6 +16,7 @@ header {
   right: 0;
   top: 0;
   //opacity: 0.5;
+  z-index: 100;
 
   .container {
     width: $pageWidth;
@@ -94,6 +95,8 @@ header {
         height: $bannerHeight;
         background: #0e275e;
         position: relative; //相对定位
+        overflow: hidden;
+        z-index: 0;
         .banner-url{
           overflow: hidden;
           width: $bannerWidth*4;
