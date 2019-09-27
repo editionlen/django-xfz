@@ -59,6 +59,7 @@ Banner.prototype.listenArrowClick = function () {
     self.leftArrow.click(function(){
         if(self.index === 0)
         {
+            self.bannerUl.css({"left":-self.bannerCount*self.bannerWidth});
             self.index = self.bannerCount - 1;
         }
         else
@@ -68,9 +69,10 @@ Banner.prototype.listenArrowClick = function () {
         self.animate();
     });
     self.rightArrow.click(function(){
-        if(self.index === self.bannerCount - 1)
+        if(self.index === self.bannerCount + 1)
         {
-            self.index = 0;
+            self.bannerUl.css({"left":-self.bannerWidth});
+            self.index = 2;
         }
         else
         {
