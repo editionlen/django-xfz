@@ -269,3 +269,34 @@ header {
     }
   }
 }
+
+.main{
+  .wrapper{
+    .sidebar-wrapper{
+      float:right;
+      width:356px;
+      height: 500px;
+      background: #fff;
+
+      .title-group{
+        padding: 20px;
+        overflow: hidden;
+        .title{
+          float:left;
+          font-size: 18px;
+          color:#212121;
+        }
+        .more{
+          float:right;
+          font-size: 14px;
+          color:$themeColor;
+        }
+      }
+      .advertise-group{
+        img{
+          width:100%;
+        }
+      }
+    }
+  }
+}
