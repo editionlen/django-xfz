@@ -252,6 +252,19 @@ header {
             }
           }
         }
+        .load-more-group{
+          padding: 20px 0;
+          text-align: center;
+          .load-more{
+            width:402px;
+            height: 40px;
+            background: #d2dcea;
+            color:#6d85ac;
+            border: none;
+            outline: none;
+            cursor: pointer;
+          }
+        }
       }
     }
   }
