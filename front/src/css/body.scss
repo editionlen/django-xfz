@@ -11,6 +11,11 @@ body {
     width: $pageWidth;
     margin: 0 auto;
     overflow: hidden;//清除浮动，才能获取到子盒子的高度和宽度
+    .main-content-wrapper{
+      float:left;
+      width: $mainBoxWidth;
+
+    }
   }
 }
 
