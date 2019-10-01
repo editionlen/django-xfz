@@ -6,6 +6,7 @@
 .main{
   .wrapper{
     .main-content-wrapper{
+      background:#fff;
       .news-wrapper{
         padding: 20px;
 
@@ -54,6 +55,18 @@
               background-position: -39px 0;
               margin-left:10px;
             }
+          }
+        }
+
+        .article{
+          margin-top:20px;
+          line-height: 30px;
+          img{
+            max-width: 100%;
+          }
+          p{
+            margin: 20px auto;
+            color:#212121;
           }
         }
       }
