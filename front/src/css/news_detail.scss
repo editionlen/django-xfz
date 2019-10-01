@@ -7,9 +7,9 @@
   .wrapper{
     .main-content-wrapper{
       background:#fff;
+      padding: 20px;
+      box-sizing: border-box; //边框在盒子内部，这样边框就不会加宽盒子
       .news-wrapper{
-        padding: 20px;
-
         .title{
           color: $mainFontColor;
           font-size:24px;
@@ -67,6 +67,46 @@
           p{
             margin: 20px auto;
             color:#212121;
+          }
+        }
+      }
+      .comment-wrapper{
+        border-top: 1px solid $lineColor;
+        padding-top: 20px;
+        .title{
+          color:$mainFontColor;
+          font-size:18px;
+          font-weight: 400;
+        }
+        .comment-textarea{
+          margin-top:10px;
+          width:100%;
+          resize: none;
+          outline:none;
+          border: 1px solid #ccc;
+          border-radius:5px;
+          font-size:14px;
+          padding: 6px 10px;
+          box-sizing: border-box;
+        }
+        .nologin-textarea{
+          height:40px;
+          line-height:28px;
+          overflow: hidden;
+        }
+        .login-textarea{
+          height: 80px;
+        }
+        .submit-btn-group{
+          text-align:right;
+          margin-top:14px;
+          .sumbit-btn{
+            background:$themeColor;
+            border: none;
+            padding: 6px 10px;
+            color:#fff;
+            border-radius: 5px;
+            cursor: pointer;
           }
         }
       }
