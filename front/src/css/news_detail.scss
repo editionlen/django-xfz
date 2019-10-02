@@ -109,6 +109,38 @@
             cursor: pointer;
           }
         }
+        .comment-list{
+          margin-top:20px;
+          li{
+            border-bottom: 1px solid $lineColor;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+            .comment-info{
+              overflow: hidden;
+              height: 40px;
+              line-height: 40px;
+              color:$assistFontColor;
+              font-size:16px;
+              .avatar{
+                float:left;
+                width:40px;
+                height:40px;
+                border-radius:50%;
+              }
+              .author{
+                float:left;
+                margin-left:20px;
+              }
+              .pub-time{
+                float:right;
+              }
+            }
+            .comment-content{
+              margin-left: 60px;
+              margin-top:10px;
+            }
+          }
+        }
       }
     }
   }
