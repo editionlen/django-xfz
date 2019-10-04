@@ -44,12 +44,17 @@
   .wrapper{
     .course-list{
       margin-top:20px;
+      display:flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
       li{
         $courseItemHeight: 280px;
         $thumbnailHeight: 158px;
         width:278px;
         height: $courseItemHeight;
         background:#fff;
+        margin-bottom: 20px;
         .thumbnail-group{
           width: 100%;
           height: $thumbnailHeight;
