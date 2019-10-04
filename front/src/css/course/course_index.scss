@@ -1,8 +1,8 @@
-@import "init.scss";
-@import "header.scss";
-@import "footer.scss";
-@import "body.scss";
-@import "constants.scss";
+@import "../common/init.scss";
+@import "../common/header";
+@import "../common/footer";
+@import "../common/body";
+@import "../common/constants";
 
 .main{
   margin-top:64px;
