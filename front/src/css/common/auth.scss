@@ -1,4 +1,5 @@
 @import "constants";
+@import "init";
 
 body{
   background:pink;
@@ -25,7 +26,7 @@ body{
     .close-wrapper{
       width:100%;
       height:40px;
-      background: salmon;
+      background: #fff;
 
       .close-btn{
         display: inline-block;
@@ -56,11 +57,27 @@ body{
         .auth-group{
           width:$authWrapperWidth;
           height:100%;
+          padding: 20px;
+          box-sizing: border-box;
+          .top-group{
+            height:36px;
+            border-bottom: 1px solid $lineColor;
+            line-height: 34px;
+            .title{
+              float:left;
+              color:$mainFontColor;
+              border-bottom: 3px solid $themeColor;
+            }
+            .switch{
+              float:right;
+              color: $themeColor;
+            }
+          }
         }
 
         .signin-group{
           float:left;
-          background:green;
+          background:#fff;
         }
         .signup-group{
           float:left;
