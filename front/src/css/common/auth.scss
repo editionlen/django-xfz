@@ -16,7 +16,7 @@ body{
   display: none;
 
   .auth-wrapper{
-    $authWrapperHeight: 500px;
+    $authWrapperHeight: 520px;
     $authWrapperWidth: 400px;
     width:400px;
     height:$authWrapperHeight;
@@ -50,11 +50,11 @@ body{
         position: absolute;
         top:0;
         left:0;
-        background: #fff;
+        //background: #fff;
 
         .auth-group{
           width:$authWrapperWidth;
-          padding: 20px;
+          padding: 0 20px 20px;
           box-sizing: border-box;
           .top-group{
             height:36px;
@@ -75,6 +75,7 @@ body{
             margin-top: 20px;
             .input-group{
               margin-bottom: 20px;
+              height:40px;
               .form-control{
                 border: 1px solid #ccc;
                 padding: 10px;
@@ -94,6 +95,25 @@ body{
                 color:#fff;
                 cursor: pointer;
               }
+              .short-input-group{
+                width:250px;
+                float:left;
+              }
+              .input-group-addon{
+                float:right;
+                width:100px;
+                .sms-captcha-btn{
+                  width:100%;
+                  height:40px;
+                  border: 1px solid $themeColor;
+                  color: $themeColor;
+                  display: inline-block;
+                  text-align: center;
+                  line-height: 40px;
+                  box-sizing: border-box;
+                  cursor: pointer;
+                }
+              }
             }
           }
         }
@@ -106,7 +126,7 @@ body{
         }
         .signup-group{
           float:left;
-          background:sandybrown;
+          background:#fff;
         }
       }
     }
