@@ -1,0 +1,59 @@
+body{
+  background:pink;
+}
+
+.mask-wrapper{
+  position: fixed;
+  left:0;
+  right:0;
+  top:0;
+  bottom: 0;
+  background: rgba(0,0,0,0.3);
+  overflow-y: scroll;
+
+  .auth-wrapper{
+    $authWrapperHeight: 500px;
+    $authWrapperWidth: 400px;
+    width:400px;
+    height:$authWrapperHeight;
+    background: #fff;
+    margin: 40px auto;
+
+    .close-wrapper{
+      width:100%;
+      height:40px;
+      background: salmon;
+    }
+
+    .auth-inner-wrapper{
+      width:100%;
+      height: $authWrapperHeight - 40px;
+      background: #ccc;
+      position: relative;
+      overflow: hidden;
+
+      .scroll-wrapper{
+        width: $authWrapperWidth*2;
+        height: 100%;
+        position: absolute;
+        top:0;
+        left:0;
+        background: #fff;
+
+        .auth-group{
+          width:$authWrapperWidth;
+          height:100%;
+        }
+
+        .signin-group{
+          float:left;
+          background:green;
+        }
+        .signup-group{
+          float:left;
+          background:sandybrown;
+        }
+      }
+    }
+  }
+}
