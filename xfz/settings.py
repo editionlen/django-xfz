@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'apps.xfzauth',
     'apps.cms',
     'apps.news'
 ]
@@ -112,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+AUTH_USER_MODEL = 'xfzauth.User'
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
