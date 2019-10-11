@@ -13,6 +13,7 @@ class UserManager(BaseUserManager):
 
         user = self.model(telephone=telephone, username=username, **kwargs)
         user.set_password(password)
+        user.save()
         return user
 
     def create_user(self, telephone, username, password, **kwargs):
