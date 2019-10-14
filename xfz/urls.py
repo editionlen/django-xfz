@@ -22,4 +22,6 @@ urlpatterns = [
     path('cms/', include('apps.cms.urls')),
     path('news/', include("apps.news.urls")),
     path('account/', include("apps.xfzauth.urls")),
+    path('course/', include('apps.course.urls')),
+    path('payinfo/', include('apps.payinfo.urls'))
 ]
