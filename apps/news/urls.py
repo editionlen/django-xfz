@@ -4,5 +4,5 @@ from . import views
 app_name = 'news' #应用命名空间，后面可以用来区分index
 
 urlpatterns = [
-    path('', views.index, name='index')
+    path('<int:news_id>/', views.news_detail, name='news.detail'),
 ]

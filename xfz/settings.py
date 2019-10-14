@@ -88,7 +88,7 @@ DATABASES = {
         'HOST': '127.0.0.1',
         'PORT': 3306,
         'USER': 'root',
-        'PASSWORD': 'root',
+        'PASSWORD': 'ireadygo',
         'OPTIONS':{'isolation_level':None}
         # 增加OPTIONS解决 SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED' 的mysql版本问题
     },
