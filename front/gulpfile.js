@@ -67,4 +67,5 @@ gulp.task("bs", function () {
     });
 });
 
-gulp.task("default", ['bs', 'watch']);
+// gulp.task("default", ['bs', 'watch'])
+gulp.task("default", ['watch']);

@@ -11,9 +11,10 @@ body{
   right:0;
   top:0;
   bottom: 0;
-  background: rgba(0,0,0,0.3);
+  background: rgba(0,0,0,0.7);
   overflow-y: scroll;
   display: none;
+  z-index:100;
 
   .auth-wrapper{
     $authWrapperHeight: 520px;
@@ -21,7 +22,12 @@ body{
     width:400px;
     height:$authWrapperHeight;
     //background: #fff;
-    margin: 40px auto;
+    //margin: 40px auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -$authWrapperWidth/2;
+    margin-top: -$authWrapperHeight/2;
 
     .close-wrapper{
       width:100%;
