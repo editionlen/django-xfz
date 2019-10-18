@@ -59,6 +59,7 @@ Auth.prototype.listenSwitchEvent = function () {
 };
 
 Auth.prototype.listenSigninEvent = function () {
+    var self = this;
     var signinGroup = $('.signin-group');
     var telephoneInput = signinGroup.find("input[name='telephone']");
     var passwordInput = signinGroup.find("input[name='password']");
@@ -78,14 +79,32 @@ Auth.prototype.listenSigninEvent = function () {
                 'remember': remember?1:0
             },
             'success': function (result) {
-                console.log('=============');
-                console.log(result);
-                console.log('=============');
+                if(result['code'] == 200)
+                {
+                    console.log(result['code']);
+                    self.hideEvent();
+                    window.location.reload();
+                }
+                else {
+                    console.log(result['code']);
+                    var messageObject = result['message'];
+                    if (typeof messageObject == 'string' || messageObject.constructor == String)
+                    {
+                        console.log(messageObject);
+                        window.messageBox.show(messageObject);
+                    }
+                    else
+                    {
+                        for(var key in messageObject){
+                            var messages = messageObject[key];
+                            var message = messages[0];
+                            window.messageBox.show(message);
+                        }
+                    }
+                }
             },
             'fail': function (error) {
-                 console.log('xxxxxxxxxxxxxxx');
                 console.log(error);
-                 console.log('xxxxxxxxxxxxxxx');
             }
         });
     })
