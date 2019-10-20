@@ -4,6 +4,9 @@ from .forms import LoginForm
 from django.http import JsonResponse
 from utils import restful
 from django.shortcuts import redirect,reverse
+from utils.captcha.xfzcaptcha import Captcha
+from io import BytesIO
+from django.http import HttpResponse
 
 @require_POST
 def login_view(request):
@@ -32,3 +35,15 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect(reverse('index'))
+
+def img_captcha(request):
+    text, image = Captcha.gene_code()
+    out = BytesIO()
+    image.save(out, 'png')
+    out.seek(0)
+
+    response = HttpResponse(content_type='image/png')
+    response.write(out.read())
+    response['Content-length']=out.tell()
+    return response
+
