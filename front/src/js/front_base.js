@@ -24,6 +24,7 @@ function Auth() {
     var self=this;
     self.maskWrapper = $('.mask-wrapper');
     self.scrollWrapper = $('.scroll-wrapper');
+    self.smsCaptcha = $(".sms-captcha-btn");
 }
 
 Auth.prototype.run = function () {
@@ -32,6 +33,7 @@ Auth.prototype.run = function () {
     self.listenSwitchEvent();
     self.listenSigninEvent();
     self.listenImgCaptchaEvent();
+    self.listenSmsCaptchaEvent();
 };
 
 Auth.prototype.showEvent = function () {
@@ -42,6 +44,25 @@ Auth.prototype.showEvent = function () {
 Auth.prototype.hideEvent = function () {
   var self = this;
   self.maskWrapper.hide();
+};
+
+Auth.prototype.smsSuccessEvent=function () {
+    var self = this;
+    messageBox.showSuccess('短信验证码发送成功!');
+    self.smsCaptcha.addClass('disabled');
+    var count = 10;
+    self.smsCaptcha.unbind('click');
+    var timer = setInterval(function () {
+        self.smsCaptcha.text(count+'s');
+        count--;
+        if(count<=0)
+        {
+            clearInterval(timer);
+            self.smsCaptcha.removeClass('disabled');
+            self.smsCaptcha.text('发送验证码');
+            self.listenSmsCaptchaEvent();
+        }
+    }, 1000);
 };
 
 Auth.prototype.listenShowHideEvent = function () {
@@ -84,6 +105,33 @@ Auth.prototype.listenImgCaptchaEvent = function () {
     var imgCaptcha = $(".img-captcha");
     imgCaptcha.click(function () {
         imgCaptcha.attr("src", "/account/img_captcha/"+"?random="+Math.random())
+    })
+};
+
+Auth.prototype.listenSmsCaptchaEvent = function () {
+    var self = this;
+    var smsCaptcha = $(".sms-captcha-btn");
+    var telephoneInput = $(".signup-group input[name='telephone']");
+    smsCaptcha.click(function () {
+        var telephone = telephoneInput.val();
+        if(!telephone)
+        {
+            messageBox.showInfo('请输入手机号码!');
+        }
+        xfzajax.get({
+            'url':'/account/sms_captcha/',
+            'data':{
+                'telephone': telephone
+            },
+            'success':function (result) {
+                if(result['code']==200){
+                    self.smsSuccessEvent();
+                }
+            },
+            'fail':function (error) {
+                console.log(error);
+            }
+        })
     })
 };
 
