@@ -7,6 +7,8 @@ from django.shortcuts import redirect,reverse
 from utils.captcha.xfzcaptcha import Captcha
 from io import BytesIO
 from django.http import HttpResponse
+from utils.aliyunsdk import aliyunsms
+from utils import restful
 
 @require_POST
 def login_view(request):
@@ -47,3 +49,9 @@ def img_captcha(request):
     response['Content-length']=out.tell()
     return response
 
+def sms_captcha(request):
+    telephone = request.GET.get('telephone')
+    code = Captcha.gene_text()
+    result = aliyunsms.send_sms(telephone, code)
+    print(result)
+    return restful.ok()
