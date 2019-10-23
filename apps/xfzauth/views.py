@@ -9,6 +9,7 @@ from io import BytesIO
 from django.http import HttpResponse
 from utils.aliyunsdk import aliyunsms
 from utils import restful
+from django.core.cache import cache
 
 @require_POST
 def login_view(request):
@@ -47,11 +48,20 @@ def img_captcha(request):
     response = HttpResponse(content_type='image/png')
     response.write(out.read())
     response['Content-length']=out.tell()
+
+    cache.set(text.lower(), text.lower(), 5*60)
     return response
 
 def sms_captcha(request):
     telephone = request.GET.get('telephone')
     code = Captcha.gene_text()
+    cache.set(telephone, code, 5*60)
     result = aliyunsms.send_sms(telephone, code)
     print(result)
     return restful.ok()
+
+def cache_test(request):
+    cache.set('username', 'editionlen', 5*60)
+    result = cache.get('username')
+    print(result)
+    return HttpResponse('success')
