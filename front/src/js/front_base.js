@@ -32,6 +32,7 @@ Auth.prototype.run = function () {
     self.listenShowHideEvent();
     self.listenSwitchEvent();
     self.listenSigninEvent();
+    self.listenSignupEvent();
     self.listenImgCaptchaEvent();
     self.listenSmsCaptchaEvent();
 };
@@ -156,34 +157,52 @@ Auth.prototype.listenSigninEvent = function () {
                 'remember': remember?1:0
             },
             'success': function (result) {
-                if(result['code'] == 200)
-                {
-                    console.log(result['code']);
-                    self.hideEvent();
-                    window.location.reload();
-                }
-                else {
-                    console.log(result['code']);
-                    var messageObject = result['message'];
-                    if (typeof messageObject == 'string' || messageObject.constructor == String)
-                    {
-                        console.log(messageObject);
-                        window.messageBox.show(messageObject);
-                    }
-                    else
-                    {
-                        for(var key in messageObject){
-                            var messages = messageObject[key];
-                            var message = messages[0];
-                            window.messageBox.show(message);
-                        }
-                    }
-                }
-            },
-            'fail': function (error) {
-                console.log(error);
+                self.hideEvent();
+                window.location.reload();
             }
         });
+    })
+};
+
+Auth.prototype.listenSignupEvent = function () {
+    var self = this;
+    var signupGroup = $('.signup-group');
+    var submitBtn = signupGroup.find('.submit-btn');
+    submitBtn.click(function (event) {
+        //event.preventDefault();
+        console.log("listenSignupEvent");
+        var telephoneInput = signupGroup.find("input[name='telephone']");
+        var usernameInput = signupGroup.find("input[name='username']");
+        var imgCaptchaInput = signupGroup.find("input[name='img_captcha']");
+        var password1Input = signupGroup.find("input[name='password1']");
+        var password2Input = signupGroup.find("input[name='password2']");
+        var smsCaptchaInput = signupGroup.find("input[name='sms_captcha']");
+
+        var telephone = telephoneInput.val();
+        var username = usernameInput.val();
+        var img_captcha = imgCaptchaInput.val();
+        var password1 = password1Input.val();
+        var password2 = password2Input.val();
+        var sms_captcha = smsCaptchaInput.val();
+
+        xfzajax.post({
+            'url': '/account/register/',
+            'data': {
+                'telephone': telephone,
+                'username': username,
+                'img_captcha': img_captcha,
+                'password1': password1,
+                'password2': password2,
+                'sms_captcha': sms_captcha
+            },
+            'success': function (result) {
+                self.hideEvent();
+                window.location.reload();
+            },
+            'fail':function (error) {
+                window.messageBox.showError('服务器内部错误！')
+            }
+        })
     })
 };
 

@@ -72,8 +72,8 @@ def sms_captcha(request):
     telephone = request.GET.get('telephone')
     code = Captcha.gene_text()
     cache.set(telephone, code, 5*60)
-    result = aliyunsms.send_sms(telephone, code)
-    print(result)
+    print("短信验证码：", code)
+    # result = aliyunsms.send_sms(telephone, code)
     return restful.ok()
 
 def cache_test(request):
