@@ -28,6 +28,10 @@ NewsCategory.prototype.listenAddCategoryEvent = function () {
                            console.log(result);
                            window.location.reload();
                        }
+                        else
+                        {
+                            xfzalert.close();
+                        }
                    }
                })
            }
@@ -82,6 +86,10 @@ NewsCategory.prototype.listenDeleteCategoryEvent=function () {
                     'success': function (result) {
                         if(result['code'] === 200){
                             window.location.reload();
+                        }
+                        else
+                        {
+                            xfzalert.close();
                         }
                     }
                 })
