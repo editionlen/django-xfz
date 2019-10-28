@@ -12,4 +12,5 @@ npm install
 gulp
 # 找icon图标可到　https://www.iconfont.cn/
 
-pip install aliyun-python-sdk-core
+pip install django
+pip install qiniu

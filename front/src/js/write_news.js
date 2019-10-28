@@ -26,9 +26,57 @@ News.prototype.listenUploadFielEvent = function () {
     });
 };
 
+News.prototype.listenQiniuUploadFileEvent = function () {
+    var self = this;
+    var uploadBtn = $('#thumbnail-btn');
+    uploadBtn.change(function () {
+        var file = this.files[0];
+        xfzajax.get({
+            'url': '/cms/qntoken/',
+            'success': function(result){
+                if(result['code'] === 200){
+                    var token = result['data']['token'];
+                    var key = (new Date()).getTime() + '.' + file.name.split('.')[1];
+                    var putExtra = {
+                        fname: key,
+                        params: {},
+                        mimeType: ['image/png', "image/jpeg", "image/gif"]
+                    };
+                    var config = {
+                        useCdnDomain: true,
+                        retryCount: 6,
+                        region:qiniu.region.z2
+                    };
+                    var observable = qiniu.upload(file, key, token, putExtra, config);
+                    observable.subscribe({
+                        'next': self.handleFileUploadProgress,
+                        'error': self.handleFileUploadError,
+                        'complete': self.handleFileUploadComplete
+                    })
+                }
+            }
+        })
+    });
+};
+
+News.prototype.handleFileUploadProgress = function (response) {
+  var total = response.total;
+  var percent = total.percent;
+  console.log(percent);
+};
+
+News.prototype.handleFileUploadError = function (error) {
+    console.log(error.message);
+};
+
+News.prototype.handleFileUploadComplete = function (response) {
+    console.log(response);
+};
+
 News.prototype.run = function () {
     var self = this;
-    self.listenUploadFielEvent();
+    self.listenQiniuUploadFileEvent();
+    //self.listenUploadFielEvent();
 };
 
 $(function () {

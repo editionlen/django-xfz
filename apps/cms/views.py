@@ -7,6 +7,7 @@ from utils import restful
 from .forms import EditNewsCategoryForm
 import os
 from django.conf import settings
+import qiniu
 
 #页面设计代码从https://adminlte.io/获取
 # Create your views here.
@@ -72,3 +73,16 @@ def upload_file(request):
             fp.write(chunk)
     url = request.build_absolute_uri(settings.MEDIA_URL+name)
     return restful.result(data={'url':url})
+
+@require_GET
+def qntoken(request):
+    access_key = 'NCdpcnwpDHWAkxq1EoGzcJvrMblJcGGAjBCuD-5M'
+    secret_key = '67rIUi3dVIJG7ZfiZyXA7vXvVTXdJtVO3ZosTU-K'
+
+    bucket = 'editionlen-huanan'
+    q = qiniu.Auth(access_key, secret_key)
+
+    token = q.upload_token(bucket)
+
+    return restful.result(data={'token':token})
+
