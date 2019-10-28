@@ -40,7 +40,7 @@ News.prototype.listenQiniuUploadFileEvent = function () {
                     var putExtra = {
                         fname: key,
                         params: {},
-                        mimeType: ['image/png', "image/jpeg", "image/gif"]
+                        mimeType: ['image/png', "image/jpeg", "image/gif", "video/mp4"]
                     };
                     var config = {
                         useCdnDomain: true,
@@ -62,7 +62,12 @@ News.prototype.listenQiniuUploadFileEvent = function () {
 News.prototype.handleFileUploadProgress = function (response) {
   var total = response.total;
   var percent = total.percent;
-  console.log(percent);
+  var percentText = percent.toFixed(0) + '%';
+  var progressGroup = News.progressGroup;
+  progressGroup.show();
+  var progressBar = $(".progress-bar");
+  progressBar.css({"width":percentText});
+  progressBar.text(percentText);
 };
 
 News.prototype.handleFileUploadError = function (error) {
@@ -71,6 +76,14 @@ News.prototype.handleFileUploadError = function (error) {
 
 News.prototype.handleFileUploadComplete = function (response) {
     console.log(response);
+    var progressGroup = News.progressGroup;
+    progressGroup.hide();
+
+    var domain = "http://q036lyvu6.bkt.clouddn.com/";
+    var filename =response.key;
+    var url = domain + filename;
+    var thumbnailInput = $("input[name='thumbnail']");
+    thumbnailInput.val(url);
 };
 
 News.prototype.run = function () {
@@ -82,4 +95,6 @@ News.prototype.run = function () {
 $(function () {
     var news = new News();
     news.run();
+
+    News.progressGroup = $("#progress-group");
 });
