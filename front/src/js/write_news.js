@@ -3,6 +3,13 @@ function News() {
     
 }
 
+News.prototype.initUEditor = function () {
+    window.ue = UE.getEditor('editor',{
+        'initialFrameHeight': 400,
+        'serverUrl': '/ueditor/upload/'
+    });
+};
+
 News.prototype.listenUploadFielEvent = function () {
     var uploadBtn = $('#thumbnail-btn');
     uploadBtn.change(function () {
@@ -88,6 +95,7 @@ News.prototype.handleFileUploadComplete = function (response) {
 
 News.prototype.run = function () {
     var self = this;
+    self.initUEditor();
     self.listenQiniuUploadFileEvent();
     //self.listenUploadFielEvent();
 };

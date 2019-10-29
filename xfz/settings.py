@@ -40,7 +40,8 @@ INSTALLED_APPS = [
 
     'apps.xfzauth',
     'apps.cms',
-    'apps.news'
+    'apps.news',
+    'apps.ueditor',
 ]
 
 MIDDLEWARE = [
@@ -138,3 +139,25 @@ STATICFILES_DIRS =[
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# UEDITOR_UPLOAD_TO_SERVER = True
+# UEDITOR_UPLOAD_TO_PATH = MEDIA_ROOT
+# UEDITOR_CONFIG_PATH = os.path.join(BASE_DIR, 'front', 'dist', 'ueditor', 'config.json')
+
+QINIU_ACCESS_KEY = 'NCdpcnwpDHWAkxq1EoGzcJvrMblJcGGAjBCuD-5M'
+QINIU_SECRET_KEY = '67rIUi3dVIJG7ZfiZyXA7vXvVTXdJtVO3ZosTU-K'
+QINIU_BUCKET_NAME = 'editionlen-huanan'
+QINIU_DOMAIN = 'http://q036lyvu6.bkt.clouddn.com/'
+
+# 七牛和自己的服务器，最少要配置一个
+# UEditor配置
+UEDITOR_UPLOAD_TO_QINIU = True
+UEDITOR_QINIU_ACCESS_KEY = QINIU_ACCESS_KEY
+UEDITOR_QINIU_SECRET_KEY = QINIU_SECRET_KEY
+UEDITOR_QINIU_BUCKET_NAME = QINIU_BUCKET_NAME
+UEDITOR_QINIU_DOMAIN = QINIU_DOMAIN
+
+UEDITOR_UPLOAD_TO_SERVER = True
+UEDITOR_UPLOAD_PATH = MEDIA_ROOT
+
+UEDITOR_CONFIG_PATH = os.path.join(BASE_DIR,'front','dist','ueditor','config.json')

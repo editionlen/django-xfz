@@ -76,10 +76,10 @@ def upload_file(request):
 
 @require_GET
 def qntoken(request):
-    access_key = 'NCdpcnwpDHWAkxq1EoGzcJvrMblJcGGAjBCuD-5M'
-    secret_key = '67rIUi3dVIJG7ZfiZyXA7vXvVTXdJtVO3ZosTU-K'
+    access_key = settings.QINIU_ACCESS_KEY
+    secret_key = settings.QINIU_SECRET_KEY
 
-    bucket = 'editionlen-huanan'
+    bucket = settings.QINIU_BUCKET_NAME
     q = qiniu.Auth(access_key, secret_key)
 
     token = q.upload_token(bucket)
