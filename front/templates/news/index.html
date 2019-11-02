@@ -1,5 +1,5 @@
 {% extends 'base/front_base.html' %}
-
+{% load news_filters %}
 {% block title %}
 小饭桌
 {% endblock %}
@@ -51,49 +51,33 @@
             </div>
             <div class="list-outer-group">
                 <ul class="list-tab">
-                    <li class="active"><a href="#">最新资讯</a></li>
-                    <li><a href="#">热点</a></li>
-                    <li><a href="#">深度报道</a></li>
-                    <li><a href="#">干货分享</a></li>
-                    <li><a href="#">投资人说</a></li>
+                    {% for category in categories %}
+                        <li><a href="#">{{ category.name }}</a></li>
+                    {% endfor %}
                 </ul>
                 <ul class="list-inner-group">
-                    <li>
+                    {% for news in newses %}
+                        <li>
                         <div class="thumbnail-group">
                             <a href="#">
-                                <img src="http://static-image.xfz.cn/1516169692_914.jpg-website.news.list" alt="">
+                                <img src="{{ news.thumbnail }}" alt="">
                             </a>
                         </div>
                         <div class="news-group">
-                            <p class="title"><a href="">早报：蔚来3年亏400亿；百度前高管创竞企被判赔260万；Juul申请阻止国外电子烟进美</a></p>
+                            <p class="title"><a href="">{{ news.title }}</a></p>
                             <p class="desc">
-                                9月24日消息蔚来汽车公司（美股NIO）股价收跌20.22%，报2.17美元，盘中暴跌逾28%，创下历史低点1.97美元。且原定于昨日举行的第二季度财报电话会议已被取消。
+                                {{ news.desc }}
                             </p>
                             <p class="more">
-                                <span class="category">深度报道</span>
-                                <span class="pub-time">1小时前</span>
-                                <span class="author">editionlen</span>
+                                <span class="category">{{ news.category.name }}</span>
+                                <span class="pub-time">{{ news.pub_time|timesince }}</span>
+                                <span class="author">{{ news.author.username }}</span>
                             </p>
                         </div>
                     </li>
-                    <li>
-                        <div class="thumbnail-group">
-                            <a href="#">
-                                <img src="http://static-image.xfz.cn/1516010894_546.jpg-website.news.list" alt="">
-                            </a>
-                        </div>
-                        <div class="news-group">
-                            <p class="title"><a href="">张小龙演讲全文:小程序、公众号将有哪些变化?</a></p>
-                            <p class="desc">
-                                刚刚出现的是我打游戏的画面，被大家看到了，那个不是我最好的水平，因为有点紧张，我最高分曾打到6000多分
-                            </p>
-                            <p class="more">
-                                <span class="category">热点</span>
-                                <span class="pub-time">2小时前</span>
-                                <span class="author">editionlen</span>
-                            </p>
-                        </div>
-                    </li>
+                    {% endfor %}
+
+
                 </ul>
                 <div class="load-more-group">
                     <button class="load-more">查看更多</button>
