@@ -143,8 +143,50 @@ Banner.prototype.run = function(){
     this.listenArrowClick();
     this.listenPageControl();
 };
+
+function Index() {
+    var self = this;
+    self.page = 2;
+}
+
+Index.prototype.listenLoadMoreEvent = function () {
+    var self = this;
+    var loadBtn = $("#load-more-btn");
+    loadBtn.click(function () {
+        xfzajax.get({
+            'url':'/news/list/',
+            'data':{
+                'p':self.page
+            },
+            'success': function (result) {
+                if(result['code'] === 200) {
+                    var newses = result['data'];
+                    if (newses.length > 0) {
+                        var tpl = template("news-item", {"newses": newses});
+                        var ul = $(".list-inner-group");
+                        ul.append(tpl);
+                        self.page += 1;
+                    }
+                    else
+                    {
+                        loadBtn.hide();
+                    }
+                }
+            }
+        })
+    });
+};
+
+Index.prototype.run = function () {
+    var self = this;
+    self.listenLoadMoreEvent();
+};
+
 //万能的$方法，确保轮播图片加载完再执行轮播
 $(function(){
     var banner = new Banner();
-    banner.run()
+    banner.run();
+
+    var index = new Index();
+    index.run();
 });
