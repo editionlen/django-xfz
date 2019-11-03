@@ -14,3 +14,4 @@ gulp
 
 pip install django
 pip install qiniu
+pip install djangorestframework
