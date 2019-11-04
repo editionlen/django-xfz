@@ -17,10 +17,14 @@ def index(request):
 
 def news_list(request):
     page = int(request.GET.get('p', 1))
+    category_id = int(request.GET.get('category_id', 0))
     start = (page-1)*settings.ONE_PAGE_NEWS_COUNT
     end = start + settings.ONE_PAGE_NEWS_COUNT
     #从query对象转为json
-    newes = News.objects.order_by('-pub_time')[start:end]
+    if category_id == 0:
+        newes = News.objects.all()[start:end]
+    else:
+        newes = News.objects.filter(category__id=category_id)[start:end]
     serializer = NewsSerializer(newes, many=True)
     data = serializer.data
     return restful.result(data=data)

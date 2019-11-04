@@ -138,6 +138,8 @@ Banner.prototype.run = function () {
 function Index() {
     var self = this;
     self.page = 2;
+    self.category_id = 0;
+    self.loadBtn = $("#load-more-btn");
 
     template.defaults.imports.timeSince = function (dateValue) {
         var date = new Date(dateValue);
@@ -177,7 +179,8 @@ Index.prototype.listenLoadMoreEvent = function () {
         xfzajax.get({
             'url': '/news/list/',
             'data': {
-                'p': self.page
+                'p': self.page,
+                'category_id': self.category_id
             },
             'success': function (result) {
                 if (result['code'] === 200) {
@@ -197,9 +200,40 @@ Index.prototype.listenLoadMoreEvent = function () {
     });
 };
 
+Index.prototype.listenCategorySwitchEvent = function () {
+    var self = this;
+    var tabGroup = $('.list-tab');
+    tabGroup.children().click(function () {
+        var li = $(this);
+        var category_id = li.attr("data-category");
+        var page = 1;
+        xfzajax.get({
+            'url': '/news/list/',
+            'data':{
+                'category_id': category_id,
+                'p': page
+            },
+            'success': function (result) {
+                if(result['code'] === 200){
+                    var newses = result['data'];
+                    var tpl = template("news-item", {"newses": newses});
+                    var newsListGroup = $(".list-inner-group");
+                    newsListGroup.empty();
+                    newsListGroup.append(tpl);
+                    self.page = 2;
+                    self.category_id =category_id;
+                    li.addClass('active').siblings().removeClass('active');
+                    self.loadBtn.show();
+                }
+            }
+        })
+    })
+};
+
 Index.prototype.run = function () {
     var self = this;
     self.listenLoadMoreEvent();
+    self.listenCategorySwitchEvent();
 };
 
 //万能的$方法，确保轮播图片加载完再执行轮播
