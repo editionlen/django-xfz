@@ -3,6 +3,7 @@ from .models import News, NewsCategory
 from django.conf import settings
 from utils import restful
 from .serializers import NewsSerializer
+from django.http import Http404
 # Create your views here.
 
 def index(request):
@@ -30,7 +31,12 @@ def news_list(request):
     return restful.result(data=data)
 
 def news_detail(request, news_id):
-    return render(request, 'news/news_detail.html')
+    try:
+        news = News.objects.get(pk=news_id)
+        context = {'news':news}
+        return render(request, 'news/news_detail.html', context=context)
+    except:
+        raise Http404
 
 def search(request):
     return render(request, 'search/search.html')
