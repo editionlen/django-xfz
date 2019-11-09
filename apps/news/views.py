@@ -34,7 +34,7 @@ def news_list(request):
 
 def news_detail(request, news_id):
     try:
-        news = News.objects.select_related('category', 'author').get(pk=news_id)
+        news = News.objects.select_related('category', 'author').prefetch_related("comments__author").get(pk=news_id)
         context = {'news':news}
         return render(request, 'news/news_detail.html', context=context)
     except News.DoesNotExist:
