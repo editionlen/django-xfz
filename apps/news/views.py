@@ -37,7 +37,7 @@ def news_detail(request, news_id):
         news = News.objects.select_related('category', 'author').get(pk=news_id)
         context = {'news':news}
         return render(request, 'news/news_detail.html', context=context)
-    except:
+    except News.DoesNotExist:
         raise Http404
 
 def public_comment(request):
