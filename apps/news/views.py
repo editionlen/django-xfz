@@ -6,6 +6,8 @@ from .serializers import NewsSerializer, CommentSerializer
 from django.http import Http404
 from .forms import PublicCommentForm
 from .models import Comment
+from django.contrib.auth.decorators import login_required
+from apps.xfzauth.decorators import xfz_login_required
 # Create your views here.
 
 def index(request):
@@ -40,6 +42,7 @@ def news_detail(request, news_id):
     except News.DoesNotExist:
         raise Http404
 
+@xfz_login_required
 def public_comment(request):
     form = PublicCommentForm(request.POST)
     if form.is_valid():

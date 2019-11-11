@@ -25,6 +25,8 @@ NewsList.prototype.listenSubmitEvent = function () {
                     commentListGroup.prepend(tpl);
                     window.messageBox.showSuccess('评论发表成功！');
                     textarea.val("");
+                }else{
+                    window.messageBox.showError(result['message']);
                 }
             }
         })
