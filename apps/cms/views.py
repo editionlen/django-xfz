@@ -100,3 +100,5 @@ def qntoken(request):
 
     return restful.result(data={'token':token})
 
+def banners(request):
+    return render(request, 'cms/banners.html')
