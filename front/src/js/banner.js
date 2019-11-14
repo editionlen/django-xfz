@@ -14,6 +14,7 @@ Banners.prototype.listenAddBannerEvent = function () {
       var bannerItem = bannerListGroup.find(".banner-item:first");
       self.addImageSelectEvent(bannerItem);
       self.addRemoveBannerEvent(bannerItem);
+      self.addSaveBannerEvent(bannerItem);
     });
 };
 
@@ -50,6 +51,35 @@ Banners.prototype.addRemoveBannerEvent = function (bannerItem) {
     closeBtn.click(function () {
         console.log("close bannerITem");
         bannerItem.remove();
+    });
+};
+
+Banners.prototype.addSaveBannerEvent = function (bannerItem) {
+    var saveBtn = bannerItem.find('.save-btn');
+    var imageTag = bannerItem.find('.thumbnail');
+    var priorityTag = bannerItem.find("input[name='priority']");
+    var linktoTag = bannerItem.find("input[name='link_to']");
+    var prioritySpan = bannerItem.find('span[class="priority"]');
+    saveBtn.click(function () {
+        var image_url = imageTag.attr('src');
+        var priority = priorityTag.val();
+        var link_to = linktoTag.val();
+        xfzajax.post({
+            'url': '/cms/add_banner/',
+            'data': {
+                'image_url': image_url,
+                'priority': priority,
+                'link_to': link_to
+            },
+            'success':function (result) {
+                if(result['code'] === 200)
+                {
+                    var bannerId = result['data']['banner_id'];
+                    prioritySpan.text("优先级："+priority);
+                    window.messageBox.showSuccess('轮播图添加完成！');
+                }
+            }
+        })
     });
 };
 
