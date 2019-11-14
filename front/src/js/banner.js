@@ -13,6 +13,7 @@ Banners.prototype.listenAddBannerEvent = function () {
 
       var bannerItem = bannerListGroup.find(".banner-item:first");
       self.addImageSelectEvent(bannerItem);
+      self.addRemoveBannerEvent(bannerItem);
     });
 };
 
@@ -41,6 +42,14 @@ Banners.prototype.addImageSelectEvent = function (bannerItem) {
                }
            }
        })
+    });
+};
+
+Banners.prototype.addRemoveBannerEvent = function (bannerItem) {
+    var closeBtn = bannerItem.find('.close-btn');
+    closeBtn.click(function () {
+        console.log("close bannerITem");
+        bannerItem.remove();
     });
 };
 
