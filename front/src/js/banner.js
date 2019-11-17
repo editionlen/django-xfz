@@ -144,7 +144,8 @@ Banners.prototype.addSaveBannerEvent = function (bannerItem) {
                         window.messageBox.showSuccess('轮播图修改成功！');
                     }
                     else {
-                        bannerId = result['data']['banner_id']
+                        bannerId = result['data']['banner_id'];
+                        bannerItem.attr('data-banner-id',bannerId);
                         window.messageBox.showSuccess('轮播图添加完成！');
                     }
                     prioritySpan.text("优先级：" + priority);
