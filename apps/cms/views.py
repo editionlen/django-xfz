@@ -4,7 +4,7 @@ from django.views.generic import View
 from django.views.decorators.http import require_POST, require_GET
 from apps.news.models import NewsCategory, News, Banner
 from utils import restful
-from .forms import EditNewsCategoryForm, WriteNewsForm, AddBannerForm
+from .forms import EditNewsCategoryForm, WriteNewsForm, AddBannerForm, EditBannerForm
 import os
 from django.conf import settings
 import qiniu
@@ -124,3 +124,15 @@ def delete_banner(request):
     banner_id = request.POST.get('banner_id')
     Banner.objects.filter(pk=banner_id).delete()
     return restful.ok()
+
+def edit_banner(request):
+    form = EditBannerForm(request.POST)
+    if form.is_valid():
+        pk = form.cleaned_data.get('pk')
+        image_url = form.cleaned_data.get('image_url')
+        link_to = form.cleaned_data.get('link_to')
+        priority = form.cleaned_data.get('priority')
+        Banner.objects.filter(pk=pk).update(image_url=image_url, link_to=link_to, priority=priority)
+        return restful.ok()
+    else:
+        return restful.params_error(message=form.get_errors())
