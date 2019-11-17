@@ -5,7 +5,7 @@ from utils import restful
 from .serializers import NewsSerializer, CommentSerializer
 from django.http import Http404
 from .forms import PublicCommentForm
-from .models import Comment
+from .models import Comment, Banner
 from django.contrib.auth.decorators import login_required
 from apps.xfzauth.decorators import xfz_login_required
 # Create your views here.
@@ -16,7 +16,8 @@ def index(request):
     categories = NewsCategory.objects.all()
     context = {
         'newses': newses,
-        'categories': categories
+        'categories': categories,
+        'banners': Banner.objects.all()
     }
     return render(request, 'news/index.html', context=context)
 

@@ -41,31 +41,13 @@
             <div class="main-content-wrapper">
                 <div class="banner-group" id="banner-group">
                     <ul class="banner-url" id="banner-ul">
+                        {% for banner in banners %}
                         <li>
-                            <a href="#">
-                                <img src="https://static-image.xfz.cn/1569478157_281.jpg" alt="">
+                            <a href="{{ banner.link_to }}">
+                                <img src="{{ banner.image_url }}" alt="">
                             </a>
                         </li>
-                        <li>
-                            <a href="#">
-                                <img src="https://static-image.xfz.cn/1568863727_493.jpg" alt="">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <img src="https://static-image.xfz.cn/1554346583_628.jpg-seriescourse.list" alt="">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <img src="https://static-image.xfz.cn/1554346512_613.jpg-seriescourse.list" alt="">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <img src="https://static-image.xfz.cn/1563171621_723.png-course.list.small" alt="">
-                            </a>
-                        </li>
+                        {% endfor %}
 
                     </ul>
                     <span class="arrow left-arrow">﹤</span>
