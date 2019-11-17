@@ -1,20 +1,47 @@
-
 function Banners() {
-    
+
 }
+
+Banners.prototype.loadData = function () {
+    var self = this;
+    xfzajax.get({
+        'url': '/cms/banner_list/',
+        'success': function (result) {
+            if (result['code'] === 200) {
+                var banners = result['data'];
+                for (var i = 0; i < banners.length; i++) {
+                    var banner = banners[i];
+                    self.createBannerItem(banner);
+                }
+            }
+        }
+    })
+};
+
+Banners.prototype.createBannerItem = function (banner) {
+    var tpl = template("banner-item", {"banner": banner});
+    var bannerListGroup = $(".banner-list-group");
+
+    var bannerItem = null;
+    if(banner){
+        bannerListGroup.append(tpl);
+        bannerItem = bannerListGroup.find(".banner-item:last");
+    }
+    else{
+        bannerListGroup.prepend(tpl);
+        bannerItem = bannerListGroup.find(".banner-item:first");
+    }
+
+    self.addImageSelectEvent(bannerItem);
+    self.addRemoveBannerEvent(bannerItem);
+    self.addSaveBannerEvent(bannerItem);
+};
 
 Banners.prototype.listenAddBannerEvent = function () {
     var self = this;
     var addBtn = $("#add-banner-btn");
     addBtn.click(function () {
-      var tpl = template("banner-item");
-      var bannerListGroup = $(".banner-list-group");
-      bannerListGroup.prepend(tpl);
-
-      var bannerItem = bannerListGroup.find(".banner-item:first");
-      self.addImageSelectEvent(bannerItem);
-      self.addRemoveBannerEvent(bannerItem);
-      self.addSaveBannerEvent(bannerItem);
+        self.createBannerItem();
     });
 };
 
@@ -23,26 +50,25 @@ Banners.prototype.addImageSelectEvent = function (bannerItem) {
     var imageInput = bannerItem.find('.image-input');
     //图片是不能打开文件选择框的，只能通过INput(type=file)
     image.click(function () {
-       imageInput.click();
+        imageInput.click();
     });
 
     imageInput.change(function () {
-       var file = this.files[0];
-       var formData = new FormData();
-       formData.append("file", file);
-       xfzajax.post({
-           'url': '/cms/upload_file/',
-           'data':formData,
-           'processData': false,
-           'contentType': false,
-           'success': function (result) {
-               if(result['code'] === 200)
-               {
-                   var url = result['data']['url'];
-                   image.attr('src', url);
-               }
-           }
-       })
+        var file = this.files[0];
+        var formData = new FormData();
+        formData.append("file", file);
+        xfzajax.post({
+            'url': '/cms/upload_file/',
+            'data': formData,
+            'processData': false,
+            'contentType': false,
+            'success': function (result) {
+                if (result['code'] === 200) {
+                    var url = result['data']['url'];
+                    image.attr('src', url);
+                }
+            }
+        })
     });
 };
 
@@ -71,11 +97,10 @@ Banners.prototype.addSaveBannerEvent = function (bannerItem) {
                 'priority': priority,
                 'link_to': link_to
             },
-            'success':function (result) {
-                if(result['code'] === 200)
-                {
+            'success': function (result) {
+                if (result['code'] === 200) {
                     var bannerId = result['data']['banner_id'];
-                    prioritySpan.text("优先级："+priority);
+                    prioritySpan.text("优先级：" + priority);
                     window.messageBox.showSuccess('轮播图添加完成！');
                 }
             }
@@ -85,6 +110,7 @@ Banners.prototype.addSaveBannerEvent = function (bannerItem) {
 
 Banners.prototype.run = function () {
     this.listenAddBannerEvent();
+    this.loadData();
 };
 
 $(function () {

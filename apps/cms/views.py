@@ -8,6 +8,7 @@ from .forms import EditNewsCategoryForm, WriteNewsForm, AddBannerForm
 import os
 from django.conf import settings
 import qiniu
+from apps.news.serializers import BannerSerializer
 
 #页面设计代码从https://adminlte.io/获取
 # Create your views here.
@@ -102,6 +103,11 @@ def qntoken(request):
 
 def banners(request):
     return render(request, 'cms/banners.html')
+
+def banner_list(request):
+    banners = Banner.objects.all()
+    serialize = BannerSerializer(banners, many=True)
+    return restful.result(data=serialize.data)
 
 def add_banner(request):
     form = AddBannerForm(request.POST)
