@@ -119,3 +119,8 @@ def add_banner(request):
         return restful.result(data={"banner_id":banner.pk})
     else:
         return restful.params_error(message=form.get_errors())
+
+def delete_banner(request):
+    banner_id = request.POST.get('banner_id')
+    Banner.objects.filter(pk=banner_id).delete()
+    return restful.ok()
