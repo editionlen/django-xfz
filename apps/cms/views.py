@@ -16,6 +16,13 @@ from apps.news.serializers import BannerSerializer
 def index(request):
     return render(request, 'cms/index.html')
 
+def news_list(request):
+    context = {
+        'categories': NewsCategory.objects.all(),
+        'newses': News.objects.select_related('category', 'author').all()
+    }
+    return render(request, 'cms/news_list.html', context=context)
+
 class WriteNewsView(View):
     def get(self,request):
         categories = NewsCategory.objects.all()
