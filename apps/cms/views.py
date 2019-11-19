@@ -9,6 +9,7 @@ import os
 from django.conf import settings
 import qiniu
 from apps.news.serializers import BannerSerializer
+from django.core.paginator import Paginator
 
 #页面设计代码从https://adminlte.io/获取
 # Create your views here.
@@ -16,12 +17,53 @@ from apps.news.serializers import BannerSerializer
 def index(request):
     return render(request, 'cms/index.html')
 
-def news_list(request):
-    context = {
-        'categories': NewsCategory.objects.all(),
-        'newses': News.objects.select_related('category', 'author').all()
-    }
-    return render(request, 'cms/news_list.html', context=context)
+class NewsListView(View):
+    def get(self, request):
+        page = int(request.GET.get('p', 1))
+        newses = News.objects.select_related('category', 'author').all()
+        paginator = Paginator(newses, 2)
+        page_obj = paginator.page(page)
+
+        context_data = self.get_pagination_data(paginator, page_obj)
+
+        context = {
+            'categories': NewsCategory.objects.all(),
+            'newses': page_obj.object_list,
+            'page_obj': page_obj,
+            'paginator': paginator
+        }
+        context.update(context_data)
+        return render(request, 'cms/news_list.html', context=context)
+
+    def get_pagination_data(self,paginator,page_obj,around_count=2):
+        current_page = page_obj.number
+        num_pages = paginator.num_pages
+
+        left_has_more = False
+        right_has_more = False
+
+        if current_page <= around_count + 2:
+            left_pages = range(1,current_page)
+        else:
+            left_has_more = True
+            left_pages = range(current_page-around_count,current_page)
+
+        if current_page >= num_pages - around_count - 1:
+            right_pages = range(current_page+1,num_pages+1)
+        else:
+            right_has_more = True
+            right_pages = range(current_page+1,current_page+around_count+1)
+
+        return {
+            # left_pages：代表的是当前这页的左边的页的页码
+            'left_pages': left_pages,
+            # right_pages：代表的是当前这页的右边的页的页码
+            'right_pages': right_pages,
+            'current_page': current_page,
+            'left_has_more': left_has_more,
+            'right_has_more': right_has_more,
+            'num_pages': num_pages
+        }
 
 class WriteNewsView(View):
     def get(self,request):
