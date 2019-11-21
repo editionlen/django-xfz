@@ -28,20 +28,40 @@
             <form action="" class="form-inline">
                 <div class="form-group left-group">
                     <label for="">时间：</label>
-                    <input type="text" class="form-control" name="start" placeholder="起始时间" id="start-picker" readonly>
+                    {% if start %}
+                    <input type="text" class="form-control" name="start" placeholder="起始时间" id="start-picker" readonly value="{{ start }}">
+                    {% else %}
+                    <input type="text" class="form-control" name="start" placeholder="起始时间" id="start-picker" readonly value="{{ end }}">
+                    {% endif %}
                     <span>—</span>
-                    <input type="text" class="form-control" name="end" placeholder="结束时间" id="end-picker" readonly>
+                {% if end %}
+                    <input type="text" class="form-control" name="end" placeholder="结束时间" id="end-picker" readonly value="{{ end }}">
+                {% else %}
+                    <input type="text" class="form-control" name="end" placeholder="结束时间" id="end-picker" readonly value="{{ end }}">
+                {% endif %}
                 </div>
                 <div class="form-group left-group">
                     <label for="title-input">标题：</label>
+                    {% if title %}
+                    <input type="text" class="form-control" name="title" id="title-input" placeholder="关键字" value="{{ title }}">
+                    {% else %}
                     <input type="text" class="form-control" name="title" id="title-input" placeholder="关键字">
+                    {% endif %}
                 </div>
                 <div class="form-group left-group">
                     <label for="category-input">分类：</label>
                     <select name="category" id="" class="form-control">
-                        <option value="0">所有分类</option>
+                        {% if category_id == 0 %}
+                            <option value="0" selected>所有分类</option>
+                        {% else %}
+                            <option value="0">所有分类</option>
+                        {% endif %}
                         {% for category in categories %}
-                            <option value="{{ category.pk }}">{{ category.name }}</option>
+                            {% if category_id == category.pk %}
+                                <option value="{{ category.pk }}" selected>{{ category.name }}</option>
+                            {% else %}
+                                <option value="{{ category.pk }}">{{ category.name }}</option>
+                            {% endif %}
                         {% endfor %}
                     </select>
                 </div>
