@@ -1,4 +1,5 @@
 {% extends 'cms/base.html' %}
+{% load news_filters %}
 
 {% block title %}
 新闻列表
@@ -89,7 +90,7 @@
                 <tr>
                 <td><a target="_blank" href="{% url 'news:news_detail' news_id=news.pk %}">{{ news.title }}</a></td>
                 <td>{{ news.category.name }}</td>
-                <td>{{ news.pub_time }}</td>
+                <td>{{ news.pub_time|time_format }}</td>
                 <td>{{ news.author.username }}</td>
                 <td>
                     <a href="#" class="btn btn-info btn-xs">编辑</a>
