@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from . import course_view
 
 app_name = 'cms'
 
@@ -20,4 +21,8 @@ urlpatterns = [
     path('banner_list/', views.banner_list, name='banner_list'),
     path('upload_file/', views.upload_file, name='upload_file'),
     path('qntoken/', views.qntoken, name='qntoken'),
+]
+
+urlpatterns += [
+    path('pub_course', course_view.pub_course, name='pub_course')
 ]

@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'apps.xfzauth',
     'apps.cms',
     'apps.news',
+    'apps.course',
     'apps.ueditor',
     'rest_framework',
 
